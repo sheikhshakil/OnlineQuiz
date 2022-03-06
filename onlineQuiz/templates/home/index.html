@@ -1,0 +1,239 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/home-styles.css' %}" />
+  <title>Quizify Home</title>
+</head>
+
+<body>
+
+  <!-- header section -->
+  <header class="home-bg">
+    <nav class="navbar container navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">
+        <div class="d-flex">
+          <div>
+            <img src="{% static 'images/white-logo.png' %}" class="img-fluid" id="logo" alt="">
+          </div>
+          <div>
+            <h2 id="logo-text">Quizify</h2>
+          </div>
+        </div>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+
+          {% if uid%}
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          </li>
+          {% if userType == "teacher" %}
+          <li class="nav-item">
+            <a class="nav-link" href="/createQuiz">Create Quiz</a>
+          </li>
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{fullname}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/profile">My Profile</a>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Register
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/tcRegister">as Teacher</a>
+              <a class="dropdown-item" href="/stdregister">as Student</a>
+            </div>
+          </li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </nav>
+
+    <div class="bg-body container">
+      <div class="col-md-6">
+        <h3 class="text-white">The Great Fun</h3>
+        <h1 class="text-white">Online Quiz</h1>
+      </div>
+      <div class="col-md-7">
+        <p class="d-none d-xl-block d-lg-block">
+          Quiz is a form of game or mind sport, attempt to answer questions correctly. It is a game to test knowledge
+          about a certain subject. In some countries, a quiz is also a brief assessment used in education and similar
+          fields.
+        </p>
+
+        <a href="/login" role="button" class="btn start">START TODAY <i
+            class="ml-2 fas fa-arrow-alt-circle-right"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- subjects body section -->
+  <section class="subjects container pt-5 pb-5">
+
+    <h1 class="text-center mb-5 sub-head">The Leading Online Quiz Platform</h1>
+
+    <div class="row ml-xs-auto">
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fas fa-database text-center icons"></i>
+              <h5 class="card-title">Quiz Creation</h5>
+            </div>
+
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fab fa-slack-hash"></i>
+              <h5 class="card-title">Course Registration Facilites</h5>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fas fa-signal"></i>
+              <h5 class="card-title">All in one dashboard</h5>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2nd row -->
+
+    <div class="row ml-xs-auto mt-4">
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fas fa-square-root-alt"></i>
+              <h5 class="card-title">Automated Scoring</h5>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fas fa-atom"></i>
+              <h5 class="card-title">Everything with AI</h5>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="text-center">
+              <i class="fas fa-question-circle"></i>
+              <h5 class="card-title">24/7 support</h5>
+            </div>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- mastermind -->
+  <section class="pt-5 pb-5 mastermind">
+    <div class="container text-center">
+      <h1 class="mb-5 master-header">Presenting Our Mastermind</h1>
+      <img src="{% static 'images/mastermind.jpg' %}" class="master mb-2" alt="">
+      <h4 class="text-white">Dejan B.</h4>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <a href="">
+            <img src="{% static 'images/white-logo.png' %}" class="img-fluid footer-logo" alt="">
+          </a>
+        </div>
+        <div class="col-md-4 pt-1 text-center">
+          <a href="##"><i class="fab fa-facebook-f mr-2"></i></a>
+          <a href="##"><i class="fab fa-instagram mr-2"></i></a>
+          <a href="##"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="col-md-4">
+          <div class="copyright">
+            <p>©Copyright - Someone</p>
+            <p>All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

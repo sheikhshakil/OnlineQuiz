@@ -1,0 +1,15 @@
+.questions{
+    background-image: linear-gradient( 89.9deg,  rgb(52, 187, 218) 0.1%, rgb(252, 206, 206) 47.9%, rgba(255,255,231,1) 100.2% );
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ques-form{
+    background-image: linear-gradient( 109.6deg,  rgba(232,252,252,1) 21.2%, rgba(252,215,134,1) 56.2%, rgba(247,124,124,1) 100.2% );
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+section{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(255, 247, 238, 0.67) 0.1%, rgba(199, 255, 209, 0.733) 90.1% );
+}

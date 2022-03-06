@@ -1,0 +1,29 @@
+.input-group-text{
+    font-weight: bold !important;
+}
+
+.questions{
+    background-image: radial-gradient( circle 621px at 8.3% 75.7%,  rgba(209,247,241,1) 0%, rgba(249,213,213,1) 81% );
+    border: 1px solid green;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+section{
+    background-image: linear-gradient(to right, rgb(122, 221, 138), rgb(171, 221, 241));
+}
+
+
+sup{
+    background-image: linear-gradient(to right, #fceabb, #f8b500);
+    padding: 2px 6px;
+    font-size: 1.2rem;
+}
+
+.form{
+    /* background-image: linear-gradient(to left, #22c1c3, #fdbb2d); */
+    background-image: linear-gradient( 90.4deg,  rgba(255,220,163,1) 21.2%, rgba(129,255,239,1) 90.7% );
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+

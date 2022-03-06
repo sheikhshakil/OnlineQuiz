@@ -1,0 +1,147 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/createQuiz-styles.css' %} " />
+<title>Create Quiz</title>
+
+<section>
+    <div class="container py-4">
+        <div class="text-center m-auto col-md-10">
+            <h2>Create Quiz<sup class="ml-2">Step 1</sup></h2>
+
+            <div class="alert alert-success mt-2 mb-3" role="alert">
+                <h6>Select semester, sections and other basic details of the quiz then click ADD QUESTIONS for next step.
+                </h6>
+            </div>
+        </div>
+        
+        <div class="form py-2 px-4 col-md-9 m-auto">
+            <form action="/createQuiz/" method="post">
+                {% csrf_token %}
+                    <div class="">
+                        <div class="form-group">
+                            <!-- random quiz id -->
+                            <div class="form-group">
+                                <input type="text" name="quizid" value="{{qid}}" class="d-none form-control">
+                            </div>
+
+                            <!-- to note who created the quiz -->
+                            <div class="form-group">
+                                <input type="text" name="teacherid" value="{{userDetails.id}}" class="d-none form-control">
+                            </div>
+    
+                            <!-- semester -->
+                            <label for="sem">Semester:</label>
+                            <select class="custom-select mb-2" name="semester" id="sem" required>
+                                <option selected disabled value="">Select a semester then click Next</option>
+                                <option id="1st" value="1st">1st</option>
+                                <option id="2nd" value="2nd">2nd</option>
+                                <option id="3rd" value="3rd">3rd</option>
+                                <option id="4th" value="4th">4th</option>
+                                <option id="5th" value="5th">5th</option>
+                                <option id="6th" value="6th">6th</option>
+                                <option id="7th" value="7th">7th</option>
+                                <option id="8th" value="8th">8th</option>
+                            </select>
+                            <a class="btn btn-success" disabled id="next1" onclick="setSections()" data-toggle="collapse"
+                                href="#sec">Next</a>
+    
+                        </div>
+    
+                        <!-- section -->
+                        <div class="collapse" id="sec">
+                            <label>Sections: (which sections will attend)</label>
+                            <div class="form-check">
+                                <input class="form-check-input secValue" type="checkbox" name="sections[]" value="">
+                                <label class="form-check-label seclabel"></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input secValue" type="checkbox" name="sections[]" value="">
+                                <label class="form-check-label seclabel"></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input secValue" type="checkbox" name="sections[]" value="">
+                                <label class="form-check-label seclabel"></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input secValue" type="checkbox" name="sections[]" value="">
+                                <label class="form-check-label seclabel"></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input secValue" type="checkbox" name="sections[]" value="">
+                                <label class="form-check-label seclabel"></label>
+                            </div>
+    
+                            <div class="form-group mt-3">
+                                <label for="total">Total questions:</label>
+                                <input type="text" name="totalqs" required placeholder="Number of total questions"
+                                    class="form-control" id="total">
+                            </div>
+    
+                            <div class="form-group mt-3">
+                                <label>Starting date and time:</label>
+                                <input type="datetime-local" class="form-control" required name="start-time">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label>Ending date and time:</label>
+                                <input type="datetime-local" class="form-control" required name="end-time">
+                            </div>
+    
+                            <button class="btn btn-success mb-3" type="submit">Add questions</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function setSections() {
+        var sems = document.getElementById("sem");
+        var selectedValue = sems.options[sems.selectedIndex].value;
+
+        if (selectedValue == "1st")
+            sem = "1"
+        else if (selectedValue == "2nd")
+            sem = "2"
+        else if (selectedValue == "3rd")
+            sem = "3"
+        else if (selectedValue == "4th")
+            sem = "4"
+        else if (selectedValue == "5th")
+            sem = "5"
+        else if (selectedValue == "6th")
+            sem = "6"
+        else if (selectedValue == "7th")
+            sem = "7"
+        else if (selectedValue == "8th")
+            sem = "8"
+        else
+            sem = ""
+
+        let secValues = document.getElementsByClassName('secValue')
+        let seclabels = document.getElementsByClassName('seclabel')
+
+        if (sem) {
+            secValues[0].value = sem + "AM"
+            secValues[1].value = sem + "BM"
+            secValues[2].value = sem + "CM"
+            secValues[3].value = sem + "AF"
+            secValues[4].value = sem + "BF"
+
+            seclabels[0].innerHTML = sem + "AM"
+            seclabels[1].innerHTML = sem + "BM"
+            seclabels[2].innerHTML = sem + "CM"
+            seclabels[3].innerHTML = sem + "AF"
+            seclabels[4].innerHTML = sem + "BF"
+
+            document.getElementById('next1').style.display = 'none'
+        }
+
+    }
+</script>
+
+{% endblock %}

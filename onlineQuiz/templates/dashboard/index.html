@@ -1,0 +1,319 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/dashboard-styles.css' %} " />
+<title>Quizify Dashboard</title>
+
+<section class="py-5">
+    <div class="container">
+        <h3 class=""> {{userDetails.fullname}}
+            {% if userType == "student" %}
+            <sup class="bg-success text-white px-2">Student</sup>
+            {% else %}
+            <sup class="bg-danger text-white px-2">Teacher</sup>
+            {% endif %}
+            <br> Welcome to Dashboard
+        </h3>
+        {% if userType == "student" %}
+        <p>Here you'll see all your attended quiz scores along with upcoming quiz schedules etc.</p>
+        {% else %}
+        <p>Here you can accept course registration requests if you're authenticated, see the upcoming quiz you set,
+            previous quiz details etc.</p>
+        {% endif %}
+
+        <div class="row">
+            <div class="upcoming col-lg-12">
+                <h4 class="mb-3 text-danger">
+                    {% if userType == "student" %}
+                    Quiz for attending and History
+                    {% else %}
+                    Course Registration Requests
+                    {% endif %}
+                </h4>
+
+                <!-- if user is student then show quiz for attending -->
+                {% if userType == "student" and test %}
+                <div>
+                    <table border="1" class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Quiz ID</th>
+                                <th scope="col">Quiz Subject</th>
+                                <th scope="col">For semester</th>
+                                <th scope="col">Assigned to sections</th>
+                                <th scope="col">Total questions</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for quizOb in quizDetails %}
+                            {% if quizOb %}
+                            <tr>
+                                <th scope="row">{{ quizOb.quizid }}</th>
+                                <td> {{ quizOb.subject }} </td>
+                                <td> {{ quizOb.semester }} </td>
+                                <td> {{ quizOb.sections }} </td>
+                                <td> {{ quizOb.totalqs }} </td>
+                                <td>
+                                    {% if current_datetime < quizOb.starttime %}
+                                    <button type="button" class="btn btn-sm btn-primary" disabled>UPCOMING</button>
+                                    <br>
+                                    on {{ quizOb.starttime }}
+
+
+                                    {% elif current_datetime >= quizOb.starttime and current_datetime <= quizOb.endtime %}
+                                    <button type="button" class="btn btn-sm btn-danger" disabled>RUNNING</button>
+                                    <br>
+                                    <b>Ending </b>on <br>
+                                    {{ quizOb.endtime }}
+
+                                    {% else %}
+                                    <button type="button" class="btn btn-sm btn-danger" disabled>FINISHED</button>
+                                    <br>
+                                    on {{ quizOb.endtime }}
+
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form action="/attendQuiz" method="get">
+                                        {% if quizOb.quizid in attendedQuizIds %}
+                                        <button disabled class="btn btn-danger btn-sm" type="submit">Already
+                                            attended</button>
+
+                                        {% else %}
+                                        {% if current_datetime < quizOb.starttime %}
+                                        Attend on given time.
+
+                                        {% elif current_datetime >= quizOb.starttime and current_datetime <= quizOb.endtime %}
+                                        <input class="d-none" name="quizid" value="{{ quizOb.quizid }}" type="text">
+                                        <button class="btn btn-danger btn-sm" type="submit">Attend Quiz</button>
+
+                                        {% else %}
+                                        Quiz already ended!
+
+                                        {% endif %}
+                                        {% endif %}
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <!-- when user is teacher - accept course reg part -->
+                {% else %}
+                {% if userType == 'student' %}
+                No quiz for right now. Chill!
+                {% else %}
+                <button class="btn btn-danger" data-toggle="collapse" data-target=".courseReg">Accept students' course
+                    registration requests</button>
+                {% endif %}
+                <div class="bg-danger">
+                    {% if error %}
+                    Sorry Password Incorrect, Collect password from authority
+                    {% endif %}
+                </div>
+                <div class="collapse courseReg mt-3">
+                    <div class="card card-body col-md-6 m-auto">
+                        <h6 class="text-center">Enter authentication password</h6>
+                        <form action="/verify/" method="post">
+
+                            {% csrf_token %}
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-key"></i>
+                                    </div>
+                                </div>
+                                <input type="password" name="password" class="form-control"
+                                    placeholder="Password from authority">
+
+                                <button class=" ml-3 btn btn-danger" type="submit">Proceed</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                {% endif %}
+            </div>
+        </div>
+
+        {% if userType == "teacher" %}
+        <div class="row dashboard">
+            <div class="col-lg-12 running">
+                <div>
+                    <h4 class="mb-3 text-success">
+                        Upcoming and Previous Quiz
+                        <a href="/createQuiz" class="ml-3 btn btn-success btn-sm">CREATE QUIZ</a>
+                    </h4>
+                    {% if quizDetails %}
+                    <table border="1" class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Quiz ID</th>
+                                <th scope="col">Quiz Subject</th>
+                                <th scope="col">For semester</th>
+                                <th scope="col">Assigned to sections</th>
+                                <th scope="col">Total questions</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">View details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for quizOb in quizDetails %}
+                            <tr>
+                                <th scope="row">{{ quizOb.quizid }}</th>
+                                <td> {{ quizOb.subject }} </td>
+                                <td> {{ quizOb.semester }} </td>
+                                <td> {{ quizOb.sections }} </td>
+                                <td> {{ quizOb.totalqs }} </td>
+                                <td>
+                                    {% if current_datetime < quizOb.starttime %}
+                                    <button type="button" class="btn btn-sm btn-primary" disabled>UPCOMING</button>
+                                    <br>
+                                    on {{ quizOb.starttime }}
+
+                                    {% elif current_datetime >= quizOb.starttime and current_datetime <= quizOb.endtime %}
+                                    <button type="button" class="btn btn-sm btn-danger" disabled>RUNNING</button>
+
+                                    <br>
+                                    <b>Ending</b> on <br>
+                                    {{ quizOb.endtime }}
+
+                                    {% else %}
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled>FINISHED</button>
+                                    <br>
+                                    on {{ quizOb.endtime }}
+
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form action="/viewQuiz" method="get">
+                                        <input class="d-none" name="quizid" value="{{ quizOb.quizid }}" type="text">
+                                        <button class="btn btn-danger btn-sm" type="submit">See details</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No quiz created so far.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if userType == "student" %}
+        <div class="row dashboard">
+            <div class="col-lg-12 scores">
+                <div>
+                    <h4 class="mb-3 text-primary">
+                        Previous Quiz Scores
+                    </h4>
+                    <div>
+                        {% if attendedQuizs %}
+                        <table border="1" class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Quiz ID</th>
+                                    <th scope="col">Student ID</th>
+                                    <th scope="col">Semester</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Total questions</th>
+                                    <th scope="col">Submit time</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {%for attendedQuiz in attendedQuizs%}
+                                <tr>
+                                    <th scope="row"> {{attendedQuiz.quizid}} </th>
+                                    <td>{{attendedQuiz.studentid}}</td>
+                                    <td>{{attendedQuiz.semester}}</td>
+                                    <td>{{attendedQuiz.subject}}</td>
+                                    <td>{{attendedQuiz.totalqs}}</td>
+                                    <td>{{attendedQuiz.attendtime}}</td>
+                                    <td><b>{{attendedQuiz.score}}</b>/{{attendedQuiz.totalqs}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No quiz attended so far</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if userType == "teacher" %}
+        <div class="row dashboard">
+            <div class="col-lg-12 scores">
+                <div>
+                    <h4 class="mb-3 text-primary">
+                        Submissions Overview
+                    </h4>
+                    <div>
+                        {% if submissions %}
+                        <table border="1" class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Quiz ID</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">For semester</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Total submissions</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sub in submissions %}
+                                <tr>
+                                    <th scope="row"> {{sub.quizid}} </th>
+                                    <td> {{sub.subject}} </td>
+                                    <td> {{sub.semester}} </td>
+                                    <td>
+                                        {% if current_datetime <= sub.endtime %}
+                                        <button class="btn btn-success btn-sm" disabled>RUNNING</button><br>
+                                        <b>Ending on </b> {{sub.endtime}}
+                                        {% else %}
+                                        <button class="btn btn-secondary btn-sm" disabled>FINISHED</button><br>
+                                        <b>on </b> {{sub.endtime}}
+                                        {% endif %}
+                                    </td>
+                                    <td> Submitted by <b>{{sub.totalSub}}</b> student(s) till now.</td>
+                                    <td>
+                                        <form action="/subDetails" method="get">
+                                            <input class="d-none" name="quizid" value="{{sub.quizid}}" type="text">
+                                            <button class="btn btn-primary btn-sm" type="submit">See details</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        No students submitted any quiz answers so far.
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

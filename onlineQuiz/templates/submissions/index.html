@@ -1,0 +1,121 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/submissions-styles.css' %} " />
+<title>Submission details</title>
+
+<section class="pt-4 pb-2">
+    <div class="container">
+        <div class="alert alert-primary row" role="alert">
+            <div class="col-md-5 pt-5">
+                <h4 class="">Submission details for Quiz ID</h4>
+                <h2><b>{{quizOb.quizid}}</b></h2>
+                <hr>
+                <p class="mt-5">Here all submission details with quiz and student details will be visible.</p>
+            </div>
+            <div class="col-md-7">
+                <div class="qdetails px-4 py-3 bg-light">
+                    <div class="row mb-2 px-3">
+                        <div>
+                            <h5 class="mr-3">Quiz details</h5>
+                        </div>
+                        <div>
+                            <form action="/viewQuiz" method="get">
+                                <input class="d-none" name="quizid" value="{{quizOb.quizid}}" type="text">
+                                <button class="btn btn-success btn-sm" type="submit">See answers</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Quiz ID</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.quizid}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Quiz Subject</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.subject}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>For semester</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.semester}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Sections to attend</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.sections}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Total questions</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.totalqs}}">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Ending time</b></span>
+                            </div>
+                            <input disabled type="text" class="form-control" value="{{quizOb.endtime}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 px-4 py-3 mb-3 submits">
+                <h4>Submission till now</h4>
+                <div class="mt-3">
+                    <div class="table-responsive">
+                        <table border="1" class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Student name</th>
+                                    <th scope="col">Student ID</th>
+                                    <th scope="col">Section</th>
+                                    <th scope="col">Provided answers</th>
+                                    <th scope="col">Obtained marks</th>
+                                    <th scope="col">Submit time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for submission in submissions %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{submission.stdname}}</td>
+                                    <td>{{submission.studentid}}</td>
+                                    <td>{{submission.section}}</td>
+                                    <td>
+                                        {% for ans in allAnswers %}
+                                            {% if ans.stdid == submission.studentid %}
+                                                {% for a in ans.answers %}
+                                                <b>Q{{a.qno}}-</b>
+                                                {{ a.answer }}<br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{submission.score}}</td>
+                                    <td>{{submission.attendtime}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

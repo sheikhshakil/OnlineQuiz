@@ -1,0 +1,148 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/createQuiz-styles.css' %} " />
+<title>Create Quiz</title>
+
+<section>
+    <div class="container py-4">
+        <div class="text-center col-md-10 m-auto">
+            <h2 class="">Create Quiz<sup class="ml-2">Step 2</sup></h2>
+            <div class="alert alert-success mt-2 mb-4" role="alert">
+                <h6>Select quiz subject, create questions with options and answer then hit POST QUIZ button to assign to students
+                </h6>
+            </div>
+        </div>
+
+        <div class="form py-4 px-4 col-md-9 m-auto">
+            <form enctype="application/json" action="/postQuiz/" method="post">
+
+                {% csrf_token %}
+                <div class="">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Quiz ID</span>
+                        </div>
+                        <input type="text" value="{{quizid}}" disabled class="form-control">
+                        <input type="text" name="quizid" value="{{quizid}}" class="form-control d-none">
+                    </div>
+    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Semester</span>
+                        </div>
+                        <input type="text" value="{{semester}}" disabled class="form-control">
+                    </div>
+    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Total questions</span>
+                        </div>
+                        <input type="text" value="{{totalqs}}" disabled class="form-control">
+                        <input type="text" value="{{totalqs}}" name="totalqs" class="form-control d-none">
+                    </div>
+    
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <legend class="col-form-label col-sm-3 pt-0"><b>Select a subject</b></legend>
+                            <div class="col-sm-9">
+    
+                                {% for subject in subjects %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="subject" id="{{subject}}"
+                                        value="{{subject}}">
+                                    <label class="form-check-label" for="{{subject}}">
+                                        {{subject}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+    
+                            </div>
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="form-group">
+                        <label><b>Enter your questions below</b></label>
+    
+                        {% for i in text %}
+    
+                        <!-- question -->
+                        <div class="questions px-3 pt-4 pb-3 mt-3">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> Q{{ forloop.counter }} </span>
+                                </div>
+                                <input type="text" placeholder="Enter a MCQ" name="Q{{ forloop.counter }}"
+                                    class="form-control">
+                            </div>
+    
+                            <!-- options -->
+                            <div class="form-row mb-2">
+                                <div class="col-3">
+                                    <input type="text" name="Q{{ forloop.counter }}OPA" class="form-control"
+                                        placeholder="Option A">
+                                </div>
+                                <div class="col-3">
+                                    <input type="text" name="Q{{ forloop.counter }}OPB" class="form-control"
+                                        placeholder="Option B">
+                                </div>
+                                <div class="col-3">
+                                    <input type="text" name="Q{{ forloop.counter }}OPC" class="form-control"
+                                        placeholder="Option C">
+                                </div>
+                                <div class="col-3">
+                                    <input type="text" name="Q{{ forloop.counter }}OPD" class="form-control"
+                                        placeholder="Option D">
+                                </div>
+                            </div>
+    
+                            <!-- answer -->
+                            <div>
+                                <label class="mr-4"><b>Provide the answer</b></label>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="Q{{forloop.counter}}OPA" name="Q{{forloop.counter}}ANS"
+                                        value="A" class="custom-control-input">
+                                    <label class="custom-control-label" for="Q{{forloop.counter}}OPA">Option A</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="Q{{forloop.counter}}OPB" name="Q{{forloop.counter}}ANS"
+                                        value="B" class="custom-control-input">
+                                    <label class="custom-control-label" for="Q{{forloop.counter}}OPB">Option B</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="Q{{forloop.counter}}OPC" name="Q{{forloop.counter}}ANS"
+                                        value="C" class="custom-control-input">
+                                    <label class="custom-control-label" for="Q{{forloop.counter}}OPC">Option C</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="Q{{forloop.counter}}OPD" name="Q{{forloop.counter}}ANS"
+                                        value="D" class="custom-control-input">
+                                    <label class="custom-control-label" for="Q{{forloop.counter}}OPD">Option D</label>
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                        {% endfor %}
+    
+                    </fieldset>
+    
+                    <div class="text-center">
+                        <button class="btn btn-danger" type="submit">POST QUIZ</button>
+                    </div>
+    
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    function formatQuestions(t) {
+
+    }
+</script>
+
+{% endblock %}

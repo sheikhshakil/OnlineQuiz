@@ -1,0 +1,90 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/teacher-styles.css' %}" />
+<title>Quizify Teacher Register</title>
+
+<section class="p-5 reg-section">
+  
+    <div class="notification bg-danger text-center w-50 text-white m-auto">
+      {{ error | safe }}
+    </div>
+    
+    <div class="register-form col-md-6 text-white">
+
+      <div class="text-center p-3">
+        <div class="icon-border m-auto">
+          <i class="fas fa-user-tie"></i>
+        </div>
+      </div>
+
+      <h3 class="text-center mb-4">Sign up as a Teacher</h3>
+  
+      <form method="POST" action="/tcRegPost/">
+  
+        {% csrf_token %}
+  
+        <div class="form-row">
+          <div class="input-group col-lg-6 mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-id-card"></i>
+              </div>
+            </div>
+            <input type="text" name="teacherid" required class="form-control" id="tcid" placeholder="Teacher ID">
+          </div>
+  
+          <div class="input-group col-lg-6 mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="las la-signature form-icon"></i>
+              </div>
+            </div>
+            <input type="text" name="fullname" required class="form-control" id="name" placeholder="Full Name">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group col-auto mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-clipboard-check form-icon2"></i>
+              </div>
+            </div>
+            <input type="text" name="rank" required class="form-control" id="rank"
+              placeholder="Designation">
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="input-group col-lg-6 mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-envelope"></i>
+              </div>
+            </div>
+            <input type="email" name="email" required class="form-control" id="email" placeholder="Enter your email address">
+          </div>
+  
+          <div class="input-group col-lg-6 mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-key"></i>
+              </div>
+            </div>
+            <input type="password" name="password" required class="form-control" id="password" placeholder="Enter a strong password">
+          </div>
+        </div>
+  
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-warning mb-2">Submit <i class="ml-1 fas fa-check-circle"></i></button>
+        </div>
+      </form>
+  
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/login-styles.css' %} " />
+<title>Quizify Login</title>
+
+<section class="login p-5 bg-sec">
+
+    <div class="notification bg-success text-center w-50 text-white m-auto">
+        {{ success | safe }}
+    </div>
+    <div class="notification bg-danger text-center w-50 text-white m-auto">
+        {{ error | safe }}
+    </div>
+
+    <div class="col-md-6 m-auto login-form text-white">
+
+        <div class="text-center p-3">
+            <div class="icon-border m-auto">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+
+        <h2 class="text-center mb-4">Login to Your Account</h2>
+
+        <form method="POST" action="/loginPost/">
+
+            {% csrf_token %}
+
+            <div class="form-row">
+                <div class="input-group col-lg-6 mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                    </div>
+                    <input type="text" name="id" required class="form-control" id="id"
+                        placeholder="Enter your ID">
+                </div>
+
+                <div class="input-group col-lg-6 mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-key"></i>
+                        </div>
+                    </div>
+                    <input type="password" name="password" required class="form-control" id="password"
+                        placeholder="Enter your password">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group col-auto mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-address-book"></i>
+                        </div>
+                    </div>
+                    <select class="custom-select" name="actype" id="type" required>
+                        <option selected disabled value="">Choose account type</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-warning mt-4 mb-2">Submit <i
+                        class="ml-1 fas fa-check-circle"></i></button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

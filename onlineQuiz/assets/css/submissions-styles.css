@@ -1,0 +1,32 @@
+.qdetails{
+    border: 2px solid #3ea010;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, #fcfffa, #ddfdb8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+section{
+    background: linear-gradient(to right, #c6ffdd, #ffe29e, #ff9396);
+}
+
+.alert {
+    background-color: transparent;
+    border: 2px solid #1fb4da;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.titles{
+    display: flex;
+    align-items: center;
+}
+
+.submits{
+    border: 2px solid #e05210;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, #fffafa, #fdb8b8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

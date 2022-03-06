@@ -1,0 +1,120 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/seeCourse-styles.css' %}" />
+<title>Course Registration Requests</title>
+
+<section class="container py-4">
+    <h3 class="text-center mb-3">Course Registration Requests</h3>
+
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Registration request of Student ID {{acceptid}} is successfully Accepted.
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    {% if reject %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Registration request of Student ID {{rejectid}} is Rejected.
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    <form class="" action="/filterReq" method="get">
+        {% csrf_token %}
+        <div class="form-row filter alert alert-primary pb-1">
+            <h6 class="mt-2 mr-3">Filter requests by any of these: </h6>
+            
+            <div class="col-md-4 mb-1">
+                <select id="semester" name="semester" class="form-control">
+                    <option selected value="">Choose semester</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                    <option value="5th">5th</option>
+                    <option value="6th">6th</option>
+                    <option value="7th">7th</option>
+                    <option value="8th">8th</option>
+                    <option value="8th+">9th & above</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input
+                    oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"
+                    type="text" name="section" class="form-control mb-2" placeholder="Section">
+            </div>
+            <div class="">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered mt-2">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Student ID</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Section</th>
+                <th scope="col">Requested Courses</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for request in all_requests %}
+
+            <tr>
+                <th scope="row">
+                    {{ request.studentid }}
+                </th>
+                <td>
+                    {{ request.fullname }}
+                </td>
+                <td>
+                    {{ request.semester }}
+                </td>
+                <td>
+                    {{ request.section }}
+                </td>
+                <td>
+                    {{ request.subjects }}
+                </td>
+                <td class="text-center">
+
+                    <form action="/acceptReg/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group d-none">
+                            <input class="form-control" type="text" name="acceptid" value="{{request.studentid}}">
+                        </div>
+                        <div class="form-group d-none">
+                            <input type="text" name="subjects" value="{{request.subjects}}" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                    </form>
+                    <form action="/rejectReg/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group d-none">
+                            <input class="form-control" type="text" name="rejectid" value="{{request.studentid}}">
+                        </div>
+                        <button type="submit" class="btn btn-danger mt-2 btn-sm">Reject</button>
+                    </form>
+
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}

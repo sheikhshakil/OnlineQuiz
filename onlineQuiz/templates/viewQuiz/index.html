@@ -1,0 +1,84 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/viewQuiz-styles.css' %} " />
+<title>View Quiz Details</title>
+
+<section class="py-4">
+
+<h3 class="text-center mb-3">QUIZ DETAILS</h3>
+
+<div class="col-md-8 m-auto">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><b>Quiz ID</b></span>
+        </div>
+        <input disabled type="text" class="form-control" value="{{quizOb.quizid}}">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><b>Quiz Subject</b></span>
+        </div>
+        <input disabled type="text" class="form-control" value="{{quizOb.subject}}">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><b>Sections to attend</b></span>
+        </div>
+        <input disabled type="text" class="form-control" value="{{quizOb.sections}}">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><b>Time assigned</b></span>
+        </div>
+        <input disabled type="text" class="form-control" value="{{quizOb.starttime}}">
+    </div>
+
+    <div class="questions px-4 py-3 mb-2">
+        <h6 class="text-center mb-3">Questions</h6>
+
+        {% for question in questions %}
+        <div class="question bg-light px-3 pt-4 pb-3 mt-3">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <b>Q{{ question.qno }}</b> </span>
+                </div>
+                <input type="text" disabled value="{{ question.qs }}" class="form-control">
+            </div>
+
+            <!-- options -->
+            <div class="form-row mb-2">
+                <div class="col-3">
+                    <input type="text" disabled value="{{ question.options.A }}" class="form-control">
+                </div>
+                <div class="col-3">
+                    <input type="text" disabled value="{{ question.options.B }}" class="form-control">
+                </div>
+                <div class="col-3">
+                    <input type="text" disabled value="{{ question.options.C }}" class="form-control">
+                </div>
+                <div class="col-3">
+                    <input type="text" disabled value="{{ question.options.D }}" class="form-control">
+                </div>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <b>Answer</b> </span>
+                </div>
+                <input type="text" disabled value="Option {{ question.ans }}" class="form-control">
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+</section>
+
+</section>
+
+{% endblock %}

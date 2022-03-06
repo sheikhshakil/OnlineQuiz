@@ -1,0 +1,242 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href=" {% static 'css/attendQuiz-styles.css' %} " />
+<title>Attend Quiz</title>
+
+<section class="py-4">
+
+    <div class="container">
+        <div class="alert row alert-success" role="alert">
+            <div class="col-md-6">
+                <h4 class="">Attend Quiz</h4>
+                <p>Choose correct answers and Submit the script.<br>Keep in mind that if time is up, the Submit button will be automatically disabled.</p>
+            </div>
+            <div class="col-md-6 text-right">
+                <h4>Time left</h4>
+
+                <!-- timer -->
+                <div class="">
+                    <p id="timer">
+                        <span id="timer-days"></span>
+                        <span id="timer-hours"></span>
+                        <span id="timer-mins"></span>
+                        <span id="timer-secs"></span>
+                    </p>
+                </div>
+
+                
+            </div>
+        </div>
+
+        <form action="/judgement/" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4 py-3">
+                    <h4 class="mb-3">Details</h4>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Attending as (Student ID)</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{userDetails.id}}">
+                        <input type="text" name="studentid" class="form-control d-none" value="{{userDetails.id}}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Attending as (Name)</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{userDetails.fullname}}">
+                        <input name="std-name" type="text" class="form-control d-none" value="{{userDetails.fullname}}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Semester</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{quizOb.semester}}">
+                        <input type="text" name="semester" class="form-control d-none" value="{{quizOb.semester}}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Quiz ID</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{quizOb.quizid}}">
+                        <input type="text" name="quizid" class="form-control d-none" value="{{quizOb.quizid}}">
+                        <input type="text" name="teacherid" class="form-control d-none" value="{{quizOb.teacherid}}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Quiz Subject</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{quizOb.subject}}">
+                        <input type="text" name="subject" class="form-control d-none" value="{{quizOb.subject}}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><b>Total questions</b></span>
+                        </div>
+                        <input disabled type="text" class="form-control" value="{{quizOb.totalqs}}">
+                        <input name="totalqs" type="text" class="form-control d-none" value="{{quizOb.totalqs}}">
+                    </div>
+                </div>
+                <div class="col-md-8 py-3">
+                    <h4 class="mb-3">Questions</h4>
+
+                    <div class="ques-form px-3 py-2">
+                        {% for question in questions %}
+
+                        <div class="questions px-3 py-3 mt-3">
+
+                            <!-- questions -->
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <b>QUESTION {{ question.qno }}</b> </span>
+                                </div>
+                                <input type="text" disabled value="{{ question.qs }}" class="form-control">
+                            </div>
+
+                            <!-- options -->
+                            <div class="form-row">
+                                {% if question.options.A %}
+                                <div class="input-group col-6 mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <b>Option A</b> </span>
+                                    </div>
+                                    <input type="text" disabled value="{{ question.options.A }}" class="form-control">
+                                </div>
+                                {% endif %}
+
+                                {% if question.options.B %}
+                                <div class="input-group col-6 mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <b>Option B</b> </span>
+                                    </div>
+                                    <input type="text" disabled value="{{ question.options.B }}" class="form-control">
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- options 2nd row -->
+                            <div class="form-row">
+                                {% if question.options.C %}
+                                <div class="input-group col-6 mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <b>Option C</b> </span>
+                                    </div>
+                                    <input type="text" disabled value="{{ question.options.C }}" class="form-control">
+                                </div>
+                                {% endif %}
+
+                                {% if question.options.D %}
+                                <div class="input-group col-6 mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <b>Option D</b> </span>
+                                    </div>
+                                    <input type="text" disabled value="{{ question.options.D }}" class="form-control">
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- input answer -->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button disabled class="btn btn-danger btn-sm">Choose answer</button>
+                                </div>
+                                <div class="col-md-9 mt-1">
+                                    {% if question.options.A %}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="Q{{forloop.counter}}OPA" name="Q{{forloop.counter}}ANS"
+                                            value="A" class="custom-control-input">
+                                        <label class="custom-control-label" for="Q{{forloop.counter}}OPA">Option
+                                            A</label>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if question.options.B %}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="Q{{forloop.counter}}OPB" name="Q{{forloop.counter}}ANS"
+                                            value="B" class="custom-control-input">
+                                        <label class="custom-control-label" for="Q{{forloop.counter}}OPB">Option
+                                            B</label>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if question.options.C %}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="Q{{forloop.counter}}OPC" name="Q{{forloop.counter}}ANS"
+                                            value="C" class="custom-control-input">
+                                        <label class="custom-control-label" for="Q{{forloop.counter}}OPC">Option
+                                            C</label>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if question.options.D %}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="Q{{forloop.counter}}OPD" name="Q{{forloop.counter}}ANS"
+                                            value="D" class="custom-control-input">
+                                        <label class="custom-control-label" for="Q{{forloop.counter}}OPD">Option
+                                            D</label>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="text-center my-3">
+                            <button id="submitQuiz" class="btn btn-danger" type="submit">Submit script</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+<!-- to create the countdown timer -->
+<script>
+    const timer = setInterval(function() {
+        const endtime = "{{endtime}}"
+        let now = new Date().getTime()
+        let t = endtime - now
+        
+        if (t > 0) {
+            let days = Math.floor(t / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let mins = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+            let secs = Math.floor((t % (1000 * 60)) / 1000);
+        
+            let day = document.getElementById("timer-days") 
+            day.innerHTML = days + "<span class='label'>D : </span>";
+            day.style.fontSize = '1.8rem'
+        
+            let hr = document.getElementById("timer-hours") 
+            hr.innerHTML = ("0"+hours).slice(-2) + "<span class='label'>H : </span>";
+            hr.style.fontSize = '1.8rem'
+        
+            let min = document.getElementById("timer-mins") 
+            min.innerHTML = ("0"+mins).slice(-2) + "<span class='label'>M : </span>";
+            min.style.fontSize = '1.8rem'
+        
+            let sec = document.getElementById("timer-secs")
+            sec.innerHTML = ("0"+secs).slice(-2) + "<span class='label'>S </span>";
+            sec.style.fontSize = '1.8rem'
+
+            let time_texts = document.getElementsByClassName('label')
+
+            for(let i=0; i<4; i++){
+                time_texts[i].style.fontSize = '1.1rem'
+            }
+        
+        } else {
+            document.getElementById("timer").innerHTML = "The quiz is over";
+            let btn = document.getElementById('submitQuiz')
+            btn.disabled = true
+        }
+        
+    }, 1000);
+</script>
+
+{% endblock %}

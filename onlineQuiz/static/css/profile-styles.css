@@ -1,0 +1,46 @@
+.welcome{
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #24aed1;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, rgb(249, 251, 253), #a7eaff);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.bd-callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #24d180;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+}
+.profile{
+    background-image: linear-gradient(to right, rgb(249, 253, 249), #aaffa7);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.id{
+    border: 2px solid rgb(98, 139, 0);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    top: 25%;
+}
+
+
+
+.details label{
+    font-weight: bold;
+    color: #0b5e00;
+}
+
+.profile .body{
+    justify-content: space-around;
+}
+
+section{
+    background-image: radial-gradient( circle 1200px at 10% 20%,  rgba(255,220,163,1) 0%, rgb(129, 255, 217) 48.5%, rgb(139, 215, 251) 97.8% );
+
+}

@@ -1,0 +1,17 @@
+section{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(68, 150, 1) 0%, rgb(253, 253, 253) 90% );
+}
+
+.questions{
+    background-image: radial-gradient( circle 1000px at 10% 20%,  rgba(255,220,163,1) 0%, rgba(129,255,239,1) 48.5%, rgba(139,172,251,1) 97.8% );
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 2px solid green;
+    border-radius: 10px;
+}
+
+.question{
+    background-image: radial-gradient( circle 263px at 100.2% 3%,  rgb(37, 111, 168) 31.1%, rgb(218, 153, 67) 36.4%, rgb(95, 211, 101) 50.9%, rgb(107, 162, 207) 60.7%, rgba(249,140,69,1) 72.5%, rgb(39, 103, 150) 72.6% );
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid green;
+    border-radius: 7px;
+}

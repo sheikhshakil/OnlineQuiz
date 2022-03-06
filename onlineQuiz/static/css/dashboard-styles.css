@@ -1,0 +1,35 @@
+section{
+    overflow: hidden;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(142, 225, 243) 0%, rgba(255,247,153,1) 90% );
+}
+
+.scores{
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    border: 2px solid #24aed1;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, #fafeff, #b8effd);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.upcoming{
+    padding: 1.25rem;
+    padding-bottom: 2rem;
+    margin-top: 1.25rem;
+    border: 2px solid #d14c24;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, #fffafa, #fdb8b8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.running{
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    border: 2px solid #10be00;
+    border-left-width: .4rem;
+    border-radius: .25rem;
+    background-image: linear-gradient(to right, #fcfffa, #71e977);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
